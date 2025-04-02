@@ -46,12 +46,13 @@ export function validateUnion<T, U>(
 	return validatorA(value) || validatorB(value);
 }
 
-export function validateUnionCurried<T, U>(
+export function validateUnionCurried<T>(
 	validatorA: TypePredicate<T>,
-	validatorB: TypePredicate<U>,
-): TypePredicate<T | U> {
-	return function (value: unknown): value is T | U {
-		return validatorA(value) || validatorB(value);
+): <U>(validatorB: TypePredicate<U>) => TypePredicate<T | U> {
+	return function <U>(validatorB: TypePredicate<U>) {
+		return function (value: unknown): value is T | U {
+			return validatorA(value) || validatorB(value);
+		};
 	};
 }
 
