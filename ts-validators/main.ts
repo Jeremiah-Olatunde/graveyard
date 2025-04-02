@@ -45,3 +45,12 @@ export function validateUnion<T, U>(
 ): value is T | U {
 	return validatorA(value) || validatorB(value);
 }
+
+export function validateUnionCurried<T, U>(
+	validatorA: (v: unknown) => v is T,
+	validatorB: (v: unknown) => v is U,
+): (v: unknown) => v is T | U {
+	return function (value: unknown): value is T | U {
+		return validatorA(value) || validatorB(value);
+	};
+}
