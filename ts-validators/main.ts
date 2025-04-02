@@ -37,3 +37,11 @@ export function validateTypedRecord<T>(
 ): value is Record<string, T> {
 	return validateRecord(value) && Object.values(value).every(predicate);
 }
+
+export function validateUnion<T, U>(
+	validatorA: (v: unknown) => v is T,
+	validatorB: (v: unknown) => v is U,
+	value: unknown,
+): value is T | U {
+	return validatorA(value) || validatorB(value);
+}
