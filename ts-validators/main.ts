@@ -15,7 +15,7 @@ export function validateArray(value: unknown): value is unknown[] {
 }
 
 export function validateTypedArray<T>(
-	predicate: (v: unknown) => v is T,
+	predicate: TypePredicate<T>,
 	value: unknown,
 ): value is T[] {
 	return Array.isArray(value) && predicate(value);
@@ -32,25 +32,27 @@ export function validateRecord(
 }
 
 export function validateTypedRecord<T>(
-	predicate: (v: unknown) => v is T,
+	predicate: TypePredicate<T>,
 	value: unknown,
 ): value is Record<string, T> {
 	return validateRecord(value) && Object.values(value).every(predicate);
 }
 
 export function validateUnion<T, U>(
-	validatorA: (v: unknown) => v is T,
-	validatorB: (v: unknown) => v is U,
+	validatorA: TypePredicate<T>,
+	validatorB: TypePredicate<U>,
 	value: unknown,
-): value is T | U {
+): value is TypePredicate<T | U> {
 	return validatorA(value) || validatorB(value);
 }
 
 export function validateUnionCurried<T, U>(
-	validatorA: (v: unknown) => v is T,
-	validatorB: (v: unknown) => v is U,
-): (v: unknown) => v is T | U {
+	validatorA: TypePredicate<T>,
+	validatorB: TypePredicate<U>,
+): TypePredicate<T | U> {
 	return function (value: unknown): value is T | U {
 		return validatorA(value) || validatorB(value);
 	};
 }
+
+type TypePredicate<T> = (value: unknown) => value is T;
