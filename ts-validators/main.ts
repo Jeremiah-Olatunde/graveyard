@@ -58,7 +58,7 @@ export function validateUnionCurried<T>(
 	};
 }
 
-export function validateProperty<Key extends string, Value>(
+export function validatePropertyV0<Key extends string, Value>(
 	validator: TypePredicate<Value>,
 	key: Key,
 	value: unknown,
@@ -67,6 +67,18 @@ export function validateProperty<Key extends string, Value>(
 		const p = Object.getOwnPropertyDescriptor(value, key);
 		if (p === undefined) return false;
 		return validator(p.value);
+	}
+
+	return false;
+}
+
+export function validatePropertyV1<Key extends string, Value>(
+	validator: TypePredicate<Value>,
+	key: Key,
+	value: unknown,
+): value is Record<Key, Value> {
+	if (validateRecord(value) && key in value) {
+		return validator(value[key]);
 	}
 
 	return false;
