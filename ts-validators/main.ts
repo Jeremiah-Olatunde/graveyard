@@ -1,3 +1,5 @@
+type TypePredicate<T> = (value: unknown) => value is T;
+
 export function validateString(value: unknown): value is string {
 	return typeof value === "string";
 }
@@ -56,4 +58,16 @@ export function validateUnionCurried<T>(
 	};
 }
 
-type TypePredicate<T> = (value: unknown) => value is T;
+export function validateProperty<Key extends string, Value>(
+	validator: TypePredicate<Value>,
+	key: Key,
+	value: unknown,
+): value is Record<Key, Value> {
+	if (typeof value === "object" && value !== null) {
+		const p = Object.getOwnPropertyDescriptor(value, key);
+		if (p === undefined) return false;
+		return validator(p.value);
+	}
+
+	return false;
+}
