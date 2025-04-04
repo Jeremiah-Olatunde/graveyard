@@ -20,7 +20,7 @@ export function validateTypedArray<T>(
 	predicate: TypePredicate<T>,
 	value: unknown,
 ): value is T[] {
-	return Array.isArray(value) && predicate(value);
+	return Array.isArray(value) && value.every((v) => predicate(v));
 }
 
 export function validateRecord(
@@ -68,4 +68,11 @@ export function validateProperty<Key extends string, Value>(
 	}
 
 	return false;
+}
+
+export function validatePropertyCurried<Key extends string, Value>(
+	validator: TypePredicate<Value>,
+	key: Key,
+) {
+	return (value: unknown) => validateProperty(validator, key, value);
 }

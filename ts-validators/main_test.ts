@@ -35,3 +35,33 @@ Deno.test(function validateRecord() {
 	assert(v.validateProperty(v.validateNumber, "age", testValue));
 	assert(v.validateProperty(v.validateBoolean, "married", testValue));
 });
+
+Deno.test(function validateTypedArray() {
+	assert(v.validateTypedArray(v.validateString, []));
+	assert(v.validateTypedArray(v.validateNumber, []));
+	assert(v.validateTypedArray(v.validateBoolean, []));
+
+	assert(v.validateTypedArray(v.validateNumber, [0, 1, 2, 3, 4]));
+
+	assert(
+		v.validateTypedArray(
+			v.validateString,
+			"turning and turning in the widening gyre".split(" "),
+		),
+	);
+
+	assert(
+		v.validateTypedArray(
+			v.validateBoolean,
+			[0, 1, 2, 3, 4].map((n) => n < 2),
+		),
+	);
+
+	assert(
+		v.validateTypedArray(v.validatePropertyCurried(v.validateString, "name"), [
+			{ name: "jesuseun" },
+			{ name: "jeremiah" },
+			{ name: "olatunde" },
+		]),
+	);
+});
