@@ -1,24 +1,37 @@
 import { assert, assertFalse } from "@std/assert";
-import * as validators from "./main.ts";
+import * as v from "./main.ts";
 
 Deno.test(function validateString() {
-	assert(validators.validateString("hello world"));
-	assertFalse(validators.validateString(10));
-	assertFalse(validators.validateString(true));
-	assertFalse(validators.validateString({ prop: "not a string" }));
+	assert(v.validateString("hello world"));
+	assertFalse(v.validateString(10));
+	assertFalse(v.validateString(true));
+	assertFalse(v.validateString({ prop: "not a string" }));
 });
 
 Deno.test(function validateNumber() {
-	assert(validators.validateNumber(10));
-	assertFalse(validators.validateNumber("not a number"));
-	assertFalse(validators.validateNumber(true));
-	assertFalse(validators.validateNumber({ prop: true }));
+	assert(v.validateNumber(10));
+	assertFalse(v.validateNumber("not a number"));
+	assertFalse(v.validateNumber(true));
+	assertFalse(v.validateNumber({ prop: true }));
 });
 
 Deno.test(function validateBoolean() {
-	assert(validators.validateBoolean(true));
-	assert(validators.validateBoolean(false));
-	assertFalse(validators.validateBoolean(10));
-	assertFalse(validators.validateBoolean("not a boolean"));
-	assertFalse(validators.validateBoolean({ prop: 10000 }));
+	assert(v.validateBoolean(true));
+	assert(v.validateBoolean(false));
+	assertFalse(v.validateBoolean(10));
+	assertFalse(v.validateBoolean("not a boolean"));
+	assertFalse(v.validateBoolean({ prop: 10000 }));
+});
+
+Deno.test(function validateRecord() {
+	const testValue: unknown = {
+		name: "jesuseun jeremiah olatude",
+		age: 23,
+		married: false,
+	};
+
+	assert(v.validateRecord(testValue));
+	assert(v.validateProperty(v.validateString, "name", testValue));
+	assert(v.validateProperty(v.validateNumber, "age", testValue));
+	assert(v.validateProperty(v.validateBoolean, "married", testValue));
 });
