@@ -36,6 +36,13 @@ Deno.test(function validateRecord() {
 	assert(v.validateProperty(v.validateBoolean, "married", testValue));
 });
 
+Deno.test(function validateArray() {
+	assert(v.validateArray([]));
+	assert(v.validateArray([]));
+	assert(v.validateArray([]));
+	assert(v.validateArray([0, 1, 2, 3, 4]));
+});
+
 Deno.test(function validateTypedArray() {
 	assert(v.validateTypedArray(v.validateString, []));
 	assert(v.validateTypedArray(v.validateNumber, []));
@@ -43,25 +50,18 @@ Deno.test(function validateTypedArray() {
 
 	assert(v.validateTypedArray(v.validateNumber, [0, 1, 2, 3, 4]));
 
-	assert(
-		v.validateTypedArray(
-			v.validateString,
-			"turning and turning in the widening gyre".split(" "),
-		),
-	);
+	const stringArray = "turning and turning in the widening gyre".split(" ");
+	assert(v.validateTypedArray(v.validateString, stringArray));
+
+	const booleanArray = Array(10).map((_) => 0.5 < Math.random());
+	assert(v.validateTypedArray(v.validateBoolean, booleanArray));
+
+	const recordArray = stringArray.map((_) => ({ name: _ }));
 
 	assert(
 		v.validateTypedArray(
-			v.validateBoolean,
-			[0, 1, 2, 3, 4].map((n) => n < 2),
+			v.validatePropertyCurried(v.validateString, "name"),
+			recordArray,
 		),
-	);
-
-	assert(
-		v.validateTypedArray(v.validatePropertyCurried(v.validateString, "name"), [
-			{ name: "jesuseun" },
-			{ name: "jeremiah" },
-			{ name: "olatunde" },
-		]),
 	);
 });
