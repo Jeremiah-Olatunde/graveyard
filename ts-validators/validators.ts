@@ -56,24 +56,6 @@ export function createValidatorTypedRecord<T>(
 	};
 }
 
-export function validateUnion<T, U>(
-	validatorA: Validator<T>,
-	validatorB: Validator<U>,
-	value: unknown,
-): value is Validator<T | U> {
-	return validatorA(value) || validatorB(value);
-}
-
-export function validateUnionCurried<T>(
-	validatorA: Validator<T>,
-): <U>(validatorB: Validator<U>) => Validator<T | U> {
-	return function <U>(validatorB: Validator<U>) {
-		return function (value: unknown): value is T | U {
-			return validatorA(value) || validatorB(value);
-		};
-	};
-}
-
 export function validateProperty<Key extends string, Value>(
 	validator: Validator<Value>,
 	key: Key,
@@ -96,5 +78,14 @@ export function createValidatorProperty<Key extends string, Value>(
 		}
 
 		return false;
+	};
+}
+
+export function composeValidators2<T0, T1>(
+	validator0: Validator<T0>,
+	validator1: Validator<T1>,
+): Validator<T0 | T1> {
+	return function (value: unknown): value is T0 | T1 {
+		return validator0(value) || validator1(value);
 	};
 }
