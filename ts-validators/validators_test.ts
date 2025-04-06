@@ -60,7 +60,7 @@ Deno.test(function validateTypedArray() {
 
 	assert(
 		v.validateTypedArray(
-			v.validatePropertyCurried(v.validateString, "name"),
+			v.createValidatorProperty(v.validateString, "name"),
 			recordArray,
 		),
 	);

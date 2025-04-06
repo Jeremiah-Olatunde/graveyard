@@ -23,6 +23,14 @@ export function validateTypedArray<T>(
 	return Array.isArray(value) && value.every((v) => predicate(v));
 }
 
+export function createValidatorTypedArray<T>(
+	predicate: Validator<T>,
+): Validator<T[]> {
+	return function (value: unknown): value is T[] {
+		return Array.isArray(value) && value.every((v) => predicate(v));
+	};
+}
+
 export function validateRecord(
 	value: unknown,
 ): value is Record<string, unknown> {
@@ -38,6 +46,14 @@ export function validateTypedRecord<T>(
 	value: unknown,
 ): value is Record<string, T> {
 	return validateRecord(value) && Object.values(value).every(predicate);
+}
+
+export function createValidatorTypedRecord<T>(
+	predicate: Validator<T>,
+): Validator<Record<string, T>> {
+	return function (value: unknown): value is Record<string, T> {
+		return validateRecord(value) && Object.values(value).every(predicate);
+	};
 }
 
 export function validateUnion<T, U>(
@@ -70,9 +86,15 @@ export function validateProperty<Key extends string, Value>(
 	return false;
 }
 
-export function validatePropertyCurried<Key extends string, Value>(
+export function createValidatorProperty<Key extends string, Value>(
 	validator: Validator<Value>,
 	key: Key,
-) {
-	return (value: unknown) => validateProperty(validator, key, value);
+): Validator<Record<Key, Value>> {
+	return function (value: unknown): value is Record<Key, Value> {
+		if (validateRecord(value) && key in value) {
+			return validator(value[key]);
+		}
+
+		return false;
+	};
 }
