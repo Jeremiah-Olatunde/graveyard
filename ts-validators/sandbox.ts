@@ -1,6 +1,5 @@
-type Validator<U> = <T, R extends T & U>(value: T) => value is R;
+type Validator<T> = (value: unknown) => value is T;
 
-declare const validateString: Validator<string>;
 declare const validateNumber: Validator<number>;
 declare const validateBoolean: Validator<boolean>;
 
@@ -13,6 +12,6 @@ type ExtractValidatorTypes<Args> = Args extends Array<Validator<infer T>>
 	? T
 	: never;
 
-type TestType = ExtractValidatorTypes<TestArgs>;
+type InspectReturn = ExtractValidatorTypes<TestArgs>;
 
-const test = composeValidators(validateString, validateBoolean);
+const test = composeValidators(validateNumber, validateBoolean);
