@@ -89,3 +89,14 @@ export function composeValidators2<T0, T1>(
 		return validator0(value) || validator1(value);
 	};
 }
+
+type ExtractValidatorTypes<V> = V extends Array<Validator<infer T>> ? T : never;
+
+export function composeValidators<
+	T extends Validator<unknown>,
+	Args extends Array<T>,
+>(...args: Args): Validator<ExtractValidatorTypes<Args>> {
+	return function (value: unknown): value is ExtractValidatorTypes<Args> {
+		return args.some((validator) => validator(value));
+	};
+}
