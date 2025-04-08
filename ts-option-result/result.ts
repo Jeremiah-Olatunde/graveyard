@@ -22,24 +22,16 @@ export function map<T, U, E>(
 	result: Result<T, E>,
 	f: (value: T) => U,
 ): Result<U, E> {
-	switch (result.tag) {
-		case "ok":
-			return ok(f(result.value));
-		case "error":
-			return result;
-	}
+	if (isOk(result)) return ok(f(result.value));
+	return result;
 }
 
 export function mapErr<T, R, E>(
 	result: Result<T, E>,
 	f: (value: E) => R,
 ): Result<T, R> {
-	switch (result.tag) {
-		case "ok":
-			return result;
-		case "error":
-			return err(f(result.error));
-	}
+	if (isErr(result)) return err(f(result.error));
+	return result;
 }
 
 export function isOk<T, E>(result: Result<T, E>): result is Ok<T> {
@@ -48,4 +40,8 @@ export function isOk<T, E>(result: Result<T, E>): result is Ok<T> {
 
 export function isErr<T, E>(result: Result<T, E>): result is Err<E> {
 	return result.tag === "error";
+}
+
+export function partition<T, E>(results: Result<T, E>[]): [Ok<T>[], Err<E>[]] {
+	return [results.filter(isOk), results.filter(isErr)];
 }
