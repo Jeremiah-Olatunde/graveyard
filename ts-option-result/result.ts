@@ -57,3 +57,8 @@ export function flatten<T, E>(result: Result<Result<T, E>, E>): Result<T, E> {
 	if (isOk(result)) return result.value;
 	return result;
 }
+
+export function unwrap<T, E>(result: Result<T, E>): T {
+	if (isErr(result)) throw new Error(`[UNWRAPPED ERROR]: ${result.error}`);
+	return result.value;
+}
