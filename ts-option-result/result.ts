@@ -45,3 +45,10 @@ export function isErr<T, E>(result: Result<T, E>): result is Err<E> {
 export function partition<T, E>(results: Result<T, E>[]): [Ok<T>[], Err<E>[]] {
 	return [results.filter(isOk), results.filter(isErr)];
 }
+
+export function all<T, E>(results: Result<T, E>[]): Result<T[], E> {
+	const [oks, errs] = partition(results);
+	const values = oks.map(({ value }) => value);
+	if (errs.length === 0) return ok(values);
+	return errs[0];
+}
