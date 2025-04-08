@@ -52,3 +52,8 @@ export function all<T, E>(results: Result<T, E>[]): Result<T[], E> {
 	if (errs.length === 0) return ok(values);
 	return errs[0];
 }
+
+export function flatten<T, E>(result: Result<Result<T, E>, E>): Result<T, E> {
+	if (isOk(result)) return result.value;
+	return result;
+}
