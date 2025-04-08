@@ -17,7 +17,11 @@ export function err<E>(error: E): Err<E> {
 export function ok<T>(value: T): Ok<T> {
 	return { tag: "ok", value };
 }
-function map<T, U, E>(result: Result<T, E>, f: (value: T) => U): Result<U, E> {
+
+export function map<T, U, E>(
+	result: Result<T, E>,
+	f: (value: T) => U,
+): Result<U, E> {
 	switch (result.tag) {
 		case "ok":
 			return ok(f(result.value));
@@ -26,7 +30,7 @@ function map<T, U, E>(result: Result<T, E>, f: (value: T) => U): Result<U, E> {
 	}
 }
 
-function mapErr<T, R, E>(
+export function mapErr<T, R, E>(
 	result: Result<T, E>,
 	f: (value: E) => R,
 ): Result<T, R> {
@@ -36,4 +40,12 @@ function mapErr<T, R, E>(
 		case "error":
 			return err(f(result.error));
 	}
+}
+
+export function isOk<T, E>(result: Result<T, E>): result is Ok<T> {
+	return result.tag === "ok";
+}
+
+export function isErr<T, E>(result: Result<T, E>): result is Err<E> {
+	return result.tag === "error";
 }
