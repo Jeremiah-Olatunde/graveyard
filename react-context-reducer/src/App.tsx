@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
 import "./App.css";
 
 export default function App() {
@@ -10,7 +10,7 @@ export default function App() {
 }
 
 function Core() {
-	const { users, addUser, deleteUser } = useContextUsers();
+	const { users, dispatch } = useContextUsers();
 	return (
 		<section>
 			<h1>Context Reducers</h1>
@@ -19,12 +19,14 @@ function Core() {
 					return (
 						<li key={user.id}>
 							{user.id}
-							<button onClick={() => deleteUser(user)}>delete user</button>
+							<button onClick={() => dispatch({ type: "delete", user })}>
+								delete user
+							</button>
 						</li>
 					);
 				})}
 			</ul>
-			<button onClick={() => addUser(generateUser())}>add user</button>
+			<button onClick={() => dispatch({ type: "create" })}>add user</button>
 		</section>
 	);
 }
@@ -33,13 +35,18 @@ type User = {
 	id: string;
 };
 
-type StoreUsers = {
-	users: User[];
-	addUser: (user: User) => void;
-	deleteUser: (user: User) => void;
-};
+type StateUsers = User[];
+type DispatchUsers = (action: ActionUsers) => void;
 
-const ContextUsers = createContext<StoreUsers | null>(null);
+type ActionUsersAdd = { type: "add"; user: User };
+type ActionUsersDelete = { type: "delete"; user: User };
+type ActionUsersCreate = { type: "create" };
+type ActionUsers = ActionUsersAdd | ActionUsersDelete | ActionUsersCreate;
+
+const ContextUsers = createContext<{
+	users: StateUsers;
+	dispatch: DispatchUsers;
+} | null>(null);
 
 function useContextUsers() {
 	const users = useContext(ContextUsers);
@@ -47,19 +54,22 @@ function useContextUsers() {
 	return users;
 }
 
+function reducerUsers(state: StateUsers, action: ActionUsers): StateUsers {
+	switch (action.type) {
+		case "add":
+			return [...state, action.user];
+		case "delete":
+			return state.filter((user) => user.id !== action.user.id);
+		case "create":
+			return [...state, generateUser()];
+	}
+}
+
 function ProviderUsers({ children }: { children: React.ReactNode }) {
-	const [users, setUsers] = useState(generateUsers());
-
-	function addUser(user: User) {
-		setUsers([...users, user]);
-	}
-
-	function deleteUser({ id }: User) {
-		setUsers(users.filter((user) => user.id !== id));
-	}
+	const [users, dispatch] = useReducer(reducerUsers, [], generateUsers);
 
 	return (
-		<ContextUsers.Provider value={{ users, addUser, deleteUser }}>
+		<ContextUsers.Provider value={{ users, dispatch }}>
 			{children}
 		</ContextUsers.Provider>
 	);
