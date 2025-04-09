@@ -84,10 +84,7 @@ function ProviderUsers({ children }: { children: React.ReactNode }) {
 	const [model, dispatch] = useReducer(update, { status: "loading" });
 
 	useEffect(() => {
-		dispatch({ type: "fetch loading" });
-		fetchUsers()
-			.then((users) => dispatch({ type: "fetch ok", users }))
-			.catch(() => dispatch({ type: "fetch error", error: "500" }));
+		fetchUsersDispatch(dispatch);
 	}, []);
 
 	return (
@@ -111,4 +108,14 @@ function fetchUsers(): Promise<User[]> {
 	return new Promise((resolve, reject) =>
 		setTimeout(Math.random() < 0.5 ? resolve : reject, 1000, generateUsers()),
 	);
+}
+
+async function fetchUsersDispatch(dispatch: Dispatch) {
+	dispatch({ type: "fetch loading" });
+	try {
+		const users = await fetchUsers();
+		dispatch({ type: "fetch ok", users });
+	} catch {
+		dispatch({ type: "fetch error", error: "server error" });
+	}
 }
