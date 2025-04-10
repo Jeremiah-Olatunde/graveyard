@@ -1,4 +1,11 @@
 import { assert } from "@std/assert";
+import {
+	validateString,
+	validateNumber,
+	validateBoolean,
+	validateTypedArray,
+	validateTypedRecord,
+} from "./validators.ts";
 
 export type Serializable =
 	| string
@@ -8,23 +15,13 @@ export type Serializable =
 	| { [index: string]: Serializable };
 
 export function isSerializable(value: unknown): value is Serializable {
-	if (
-		typeof value === "string" ||
-		typeof value === "number" ||
-		typeof value === "boolean"
-	) {
-		return true;
-	}
-
-	if (Array.isArray(value)) {
-		return value.every(isSerializable);
-	}
-
-	if (typeof value === "object" && value !== null) {
-		return Object.values(value).every(isSerializable);
-	}
-
-	return false;
+	return (
+		validateString(value) ||
+		validateNumber(value) ||
+		validateBoolean(value) ||
+		validateTypedArray(isSerializable, value) ||
+		validateTypedRecord(isSerializable, value)
+	);
 }
 
 export function assertSerializable(
