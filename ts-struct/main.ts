@@ -29,3 +29,10 @@ export function assertSerializable(
 ): asserts value is Serializable {
 	assert(isSerializable(value));
 }
+
+export type Struct = Readonly<Record<string, Serializable>>;
+
+export function struct<T extends Struct>(blueprint: T): Readonly<T> {
+	assertSerializable(blueprint);
+	return blueprint;
+}
