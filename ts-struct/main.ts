@@ -1,3 +1,5 @@
+import { assert } from "@std/assert";
+
 export type Serializable =
 	| string
 	| number
@@ -5,7 +7,7 @@ export type Serializable =
 	| Serializable[]
 	| { [index: string]: Serializable };
 
-function isSerializable(value: unknown): value is Serializable {
+export function isSerializable(value: unknown): value is Serializable {
 	if (
 		typeof value === "string" ||
 		typeof value === "number" ||
@@ -23,4 +25,10 @@ function isSerializable(value: unknown): value is Serializable {
 	}
 
 	return false;
+}
+
+export function assertSerializable(
+	value: unknown,
+): asserts value is Serializable {
+	assert(isSerializable(value));
 }
