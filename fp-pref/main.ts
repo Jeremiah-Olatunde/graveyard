@@ -41,3 +41,13 @@ export function fold<Item, Accum>(
 
 	return fold(tail, f(initial, head), f);
 }
+
+export function length<Item>(array: readonly Item[]): number {
+	const [head, ...tail] = array;
+
+	if (head === undefined) {
+		return 0;
+	}
+
+	return 1 + length(tail);
+}
