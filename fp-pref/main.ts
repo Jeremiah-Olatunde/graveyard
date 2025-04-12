@@ -1,8 +1,9 @@
-export function add(a: number, b: number): number {
-  return a + b;
-}
+export function map<T, U>(
+	array: readonly T[],
+	mapping: (item: T) => U,
+): readonly U[] {
+	const [head, ...tail] = array;
 
-// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
+	if (head === undefined) return [];
+	return [mapping(head), ...map(tail, mapping)];
 }
