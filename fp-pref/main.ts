@@ -27,3 +27,17 @@ export function filter<Item>(
 
 	return filter(tail, predicate);
 }
+
+export function fold<Item, Accum>(
+	array: readonly Item[],
+	initial: Accum,
+	f: (accum: Accum, item: Item) => Accum,
+): Accum {
+	const [head, ...tail] = array;
+
+	if (head === undefined) {
+		return initial;
+	}
+
+	return fold(tail, f(initial, head), f);
+}
