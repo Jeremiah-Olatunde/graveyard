@@ -1,7 +1,7 @@
-export function map<T, U>(
-	array: readonly T[],
-	mapping: (item: T) => U,
-): readonly U[] {
+export function map<Item, Mapped>(
+	array: readonly Item[],
+	mapping: (item: Item) => Mapped,
+): readonly Mapped[] {
 	const [head, ...tail] = array;
 
 	if (head === undefined) return [];
