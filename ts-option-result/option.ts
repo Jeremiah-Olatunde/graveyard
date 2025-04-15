@@ -8,3 +8,11 @@ export type None = Readonly<{
 }>;
 
 export type Option<T> = Some<T> | None;
+
+export function isSome<T>(option: Option<T>): option is Some<T> {
+	return option.tag === "some";
+}
+
+export function isNone<T>(option: Option<T>): option is None {
+	return option.tag === "none";
+}
