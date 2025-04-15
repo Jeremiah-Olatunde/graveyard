@@ -32,6 +32,13 @@ export function map<T, U>(
 	return isSome(option) ? some(mapping(option.value)) : option;
 }
 
-export function partition<T>(results: Option<T>[]): [Some<T>[], None[]] {
-	return [results.filter(isSome), results.filter(isNone)];
+export function partition<T>(options: Option<T>[]): [Some<T>[], None[]] {
+	return [options.filter(isSome), options.filter(isNone)];
+}
+
+export function all<T>(options: Option<T>[]): Option<T[]> {
+	const [somes, nones] = partition(options);
+	const values = somes.map(({ value }) => value);
+	if (nones.length === 0) return some(values);
+	return nones[0];
 }
