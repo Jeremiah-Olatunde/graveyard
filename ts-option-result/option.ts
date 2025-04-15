@@ -32,6 +32,11 @@ export function map<T, U>(
 	return isSome(option) ? some(mapping(option.value)) : option;
 }
 
+export function flatten<T>(option: Option<Option<T>>): Option<T> {
+	if (isSome(option)) return option.value;
+	return option;
+}
+
 export function partition<T>(options: Option<T>[]): [Some<T>[], None[]] {
 	return [options.filter(isSome), options.filter(isNone)];
 }
