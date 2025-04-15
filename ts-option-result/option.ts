@@ -24,3 +24,10 @@ export function some<T>(value: T): Some<T> {
 export function none(): None {
 	return { tag: "none" };
 }
+
+export function map<T, U>(
+	option: Option<T>,
+	mapping: (value: T) => U,
+): Option<U> {
+	return isSome(option) ? some(mapping(option.value)) : option;
+}
