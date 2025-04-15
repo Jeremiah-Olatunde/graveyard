@@ -16,3 +16,11 @@ export function isSome<T>(option: Option<T>): option is Some<T> {
 export function isNone<T>(option: Option<T>): option is None {
 	return option.tag === "none";
 }
+
+export function some<T>(value: T): Some<T> {
+	return { tag: "some", value };
+}
+
+export function none(): None {
+	return { tag: "none" };
+}
