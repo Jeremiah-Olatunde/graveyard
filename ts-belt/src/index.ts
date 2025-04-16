@@ -1,4 +1,4 @@
-import { A, F, O } from "@mobily/ts-belt";
+import { A, B, F, O, pipe } from "@mobily/ts-belt";
 import assert from "node:assert";
 
 {
@@ -41,4 +41,10 @@ import assert from "node:assert";
 	assert(O.isSome(O.fromNullable({ name: "jeremiah" })));
 	assert(O.isNone(O.fromNullable(null)));
 	assert(O.isNone(O.fromNullable(undefined)));
+}
+
+{
+	const isEven = (n: number) => n % 2 === 0;
+	assert(O.isSome(O.fromPredicate(isEven)(10)));
+	assert(O.isSome(O.fromPredicate(20, isEven)));
 }
