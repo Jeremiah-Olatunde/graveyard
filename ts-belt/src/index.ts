@@ -1,4 +1,4 @@
-import { A, B, F, O, pipe } from "@mobily/ts-belt";
+import { A, B, F, flow, O, pipe } from "@mobily/ts-belt";
 import assert from "node:assert";
 
 {
@@ -47,4 +47,13 @@ import assert from "node:assert";
 	const isEven = (n: number) => n % 2 === 0;
 	assert(O.isSome(O.fromPredicate(isEven)(10)));
 	assert(O.isSome(O.fromPredicate(20, isEven)));
+}
+
+{
+	const promise = new Promise<number>((resolve) =>
+		setTimeout(resolve, 1000, 42),
+	);
+
+	const promiseOption = O.fromPromise(promise);
+	promiseOption.then(flow(O.isSome, assert));
 }
