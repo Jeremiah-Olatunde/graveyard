@@ -1,19 +1,16 @@
 {
-  "name": "learning-ts-belt",
-  "version": "0.0.0",
-  "description": "learning ts-belt",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "typescript",
-    "ts-belt",
-    "functional"
-  ],
-  "author": "jesuseun jeremiah olatunde",
-  "license": "ISC",
-  "dependencies": {
-    "@mobily/ts-belt": "^3.13.1"
-  }
+	"name": "learning-ts-belt",
+	"version": "0.0.0",
+	"description": "learning ts-belt",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": ["typescript", "ts-belt", "functional"],
+	"author": "jesuseun jeremiah olatunde",
+	"license": "ISC",
+	"dependencies": {
+		"@mobily/ts-belt": "^3.13.1",
+		"@types/node": "^22.14.1"
+	}
 }
