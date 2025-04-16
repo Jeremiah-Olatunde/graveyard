@@ -12,5 +12,8 @@
     "functional"
   ],
   "author": "jesuseun jeremiah olatunde",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@mobily/ts-belt": "^3.13.1"
+  }
 }
