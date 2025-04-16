@@ -34,3 +34,11 @@ import assert from "node:assert";
 
 	const testArray = A.makeWithIndex(10, () => O.fromExecution(uncertain));
 }
+
+{
+	assert(O.isSome(O.fromNullable(10)));
+	assert(O.isSome(O.fromNullable("hello world")));
+	assert(O.isSome(O.fromNullable({ name: "jeremiah" })));
+	assert(O.isNone(O.fromNullable(null)));
+	assert(O.isNone(O.fromNullable(undefined)));
+}
