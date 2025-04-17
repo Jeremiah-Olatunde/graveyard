@@ -57,3 +57,26 @@ import assert from "node:assert";
 	const promiseOption = O.fromPromise(promise);
 	promiseOption.then(flow(O.isSome, assert));
 }
+
+{
+	function safeHead(array: number[]): O.Option<number> {
+		if (array.length === 0) return O.None;
+		return O.Some(array[0]);
+	}
+
+	function wrappedAddtion10(n: number): O.Option<number> {
+		const result = n + 50;
+		if (100 < result) return null;
+		return result;
+	}
+
+	const testArray = [49, 20, 30];
+	const some = O.mapNullable(safeHead(testArray), wrappedAddtion10);
+	assert(O.isSome(some));
+
+	const alsoSome = O.flatMap(safeHead(testArray), wrappedAddtion10);
+	assert(O.isSome(alsoSome));
+
+	const none = O.mapNullable(safeHead([50]), wrappedAddtion10);
+	assert(O.isSome(none));
+}
