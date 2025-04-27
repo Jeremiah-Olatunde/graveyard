@@ -9,6 +9,18 @@ pub fn factorial(n: Int) -> Int {
   }
 }
 
+pub fn factorial_tail_call(n: Int) -> Int {
+  factorial_tail_call_internal(n, 1)
+}
+
+fn factorial_tail_call_internal(n: Int, accum: Int) -> Int {
+  case n {
+    0 -> 1
+    1 -> 1
+    _ -> factorial_tail_call_internal(n - 1, accum * n)
+  }
+}
+
 pub fn list_sum(list: List(Int)) -> Int {
   case list {
     [] -> 0
