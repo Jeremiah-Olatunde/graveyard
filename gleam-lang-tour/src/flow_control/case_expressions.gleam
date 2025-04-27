@@ -1,3 +1,6 @@
+import gleam/dict.{type Dict}
+import gleam/list
+
 pub fn factorial(n: Int) -> Int {
   case n {
     0 -> 1
@@ -12,4 +15,14 @@ pub fn list_sum(list: List(Int)) -> Int {
     [first] -> first
     [first, ..rest] -> first + list_sum(rest)
   }
+}
+
+pub fn partition_prefixed(strings: List(String)) -> Dict(String, List(String)) {
+  list.group(strings, fn(string: String) {
+    case string {
+      "keep_" <> _ -> "keep"
+      "drop_" <> _ -> "drop"
+      _ -> panic as "all string must be prefixed with either `drop_` or `keep_`"
+    }
+  })
 }

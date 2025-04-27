@@ -4,9 +4,12 @@ import gleam/io
 pub fn main() -> Nil {
   io.println("Hello from lang_tour!")
 
-  let sum_to_10: Int =
-    case_expressions.list_sum([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  let partition =
+    case_expressions.partition_prefixed([
+      "keep_turning", "drop_and", "keep_turning", "drop_in", "keep_the",
+      "drop_widening", "keep_gyre",
+    ])
 
-  echo sum_to_10
+  echo partition
   Nil
 }
