@@ -29,6 +29,18 @@ pub fn list_sum(list: List(Int)) -> Int {
   }
 }
 
+pub fn list_sum_tail_call(list: List(Int)) -> Int {
+  list_sum_tail_call_internal(list, 0)
+}
+
+fn list_sum_tail_call_internal(list: List(Int), accum: Int) -> Int {
+  case list {
+    [] -> 0
+    [first] -> first
+    [first, ..rest] -> first + list_sum_tail_call_internal(rest, first + accum)
+  }
+}
+
 pub fn partition_prefixed(strings: List(String)) -> Dict(String, List(String)) {
   list.group(strings, fn(string: String) {
     case string {
