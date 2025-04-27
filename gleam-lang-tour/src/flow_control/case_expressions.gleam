@@ -3,8 +3,7 @@ import gleam/list
 
 pub fn factorial(n: Int) -> Int {
   case n {
-    0 -> 1
-    1 -> 1
+    0 | 1 -> 1
     _ -> n * factorial(n - 1)
   }
 }
@@ -15,8 +14,7 @@ pub fn factorial_tail_call(n: Int) -> Int {
 
 fn factorial_tail_call_internal(n: Int, accum: Int) -> Int {
   case n {
-    0 -> 1
-    1 -> 1
+    0 | 1 -> 1
     _ -> factorial_tail_call_internal(n - 1, accum * n)
   }
 }
