@@ -56,3 +56,11 @@ pub fn third_or_last_element(list: List(a)) -> a {
     [_, _, _, fourth, ..] -> fourth
   }
 }
+
+pub fn get_first_larger(numbers: List(Int), n: Int) -> Result(Int, Nil) {
+  case numbers {
+    [head, ..] if n < head -> Ok(head)
+    [_, ..tail] -> get_first_larger(tail, n)
+    [] -> Error(Nil)
+  }
+}
