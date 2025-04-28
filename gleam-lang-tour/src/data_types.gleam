@@ -18,7 +18,7 @@ pub type University {
   Unilag
 }
 
-pub type Person {
+pub opaque type Person {
   Athelete(name: String, sport: Sport)
   Student(name: String, university: University)
 }
@@ -41,4 +41,12 @@ pub fn custom_greeting(person: Person) -> String {
     Student(_, university) ->
       "greetings i am a student at " <> university_to_string(university)
   }
+}
+
+pub fn student(name: String, university: University) -> Person {
+  Student(name, university)
+}
+
+pub fn athelete(name: String, sport: Sport) -> Person {
+  Athelete(name, sport)
 }
