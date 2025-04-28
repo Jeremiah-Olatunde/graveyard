@@ -48,3 +48,11 @@ pub fn partition_prefixed(strings: List(String)) -> Dict(String, List(String)) {
     }
   })
 }
+
+pub fn third_or_last_element(list: List(a)) -> a {
+  case list {
+    [] -> panic as "list must have a minimum length of 1"
+    [last] | [_, last] | [_, _, last] -> last
+    [_, _, _, fourth, ..] -> fourth
+  }
+}
