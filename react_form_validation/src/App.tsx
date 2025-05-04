@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 
 type FormData = {
+	username: string;
 	password: string;
 };
 
@@ -10,7 +11,7 @@ export default function App() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormData>({
-		defaultValues: { password: "" },
+		defaultValues: { username: "", password: "" },
 	});
 	const onSuccess: SubmitHandler<FormData> = (data) => console.log(data);
 	const onError: SubmitErrorHandler<FormData> = (errors) =>
@@ -24,6 +25,22 @@ export default function App() {
 				</header>
 
 				<form onSubmit={handleSubmit(onSuccess, onError)}>
+					<div>
+						<label htmlFor="username">username</label>
+						<br />
+						<input
+							{...register("username", {
+								required: { value: true, message: "username is required" },
+							})}
+						/>
+
+						{errors.username && (
+							<div style={{ color: "red" }}>{errors.username.message}</div>
+						)}
+					</div>
+
+					<br />
+
 					<div>
 						<label htmlFor="password">password</label>
 						<br />
@@ -50,8 +67,12 @@ export default function App() {
 							})}
 						/>
 
-						{errors.password && <div>{errors.password.message}</div>}
+						{errors.password && (
+							<div style={{ color: "red" }}>{errors.password.message}</div>
+						)}
 					</div>
+
+					<br />
 
 					<input type="submit" value="submit" />
 				</form>
