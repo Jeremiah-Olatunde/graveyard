@@ -9,8 +9,9 @@ export default function App() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { isSubmitting, isValidating, errors, validatingFields },
 	} = useForm<FormData>({
+		mode: "all",
 		defaultValues: { username: "", password: "" },
 	});
 	const onSuccess: SubmitHandler<FormData> = (data) => {
@@ -24,6 +25,8 @@ export default function App() {
 	};
 	const onError: SubmitErrorHandler<FormData> = (errors) =>
 		console.error(errors);
+
+	if (!isValidating && isSubmitting) return "submitting form";
 
 	return (
 		<>
@@ -39,8 +42,14 @@ export default function App() {
 						<input
 							{...register("username", {
 								required: { value: true, message: "username is required" },
+								validate: {
+									taken: async (value) => usernameAvailabe(value),
+								},
 							})}
 						/>
+						{validatingFields.username && (
+							<div>validating username availability</div>
+						)}
 
 						{errors.username && (
 							<div style={{ color: "red" }}>{errors.username.message}</div>
@@ -118,3 +127,8 @@ const DB: Record<string, string> = {
 	roman: "goodbyeWORLD123#@!",
 	jeremiah: "helloWORLD123#@!",
 };
+
+async function usernameAvailabe(username: string): Promise<true | string> {
+	await sleep(1000);
+	return DB[username] === undefined || `${username} already taken`;
+}
