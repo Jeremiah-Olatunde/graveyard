@@ -12,6 +12,7 @@ pub fn main() -> Nil {
 pub type Piece {
   X
   O
+  E
 }
 
 pub type Board {
@@ -22,6 +23,7 @@ pub fn to_string_piece(piece: Piece) -> String {
   case piece {
     X -> "x"
     O -> "o"
+    E -> " "
   }
 }
 
