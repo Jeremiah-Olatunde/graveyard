@@ -47,3 +47,25 @@ pub fn to_string_board(board: Board) -> String {
 
   divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider
 }
+
+pub fn check_winner(board: Board) -> Piece {
+  case board {
+    Board(X, X, X, _, _, _, _, _, _) -> X
+    Board(_, _, _, X, X, X, _, _, _) -> X
+    Board(_, _, _, _, _, _, X, X, X) -> X
+    Board(X, _, _, X, _, _, X, _, _) -> X
+    Board(_, X, _, _, X, _, _, X, _) -> X
+    Board(_, _, X, _, _, X, _, _, X) -> X
+    Board(_, _, X, _, X, _, X, _, _) -> X
+    Board(X, _, _, _, X, _, _, _, X) -> X
+    Board(O, O, O, _, _, _, _, _, _) -> O
+    Board(_, _, _, O, O, O, _, _, _) -> O
+    Board(_, _, _, _, _, _, O, O, O) -> O
+    Board(O, _, _, O, _, _, O, _, _) -> O
+    Board(_, O, _, _, O, _, _, O, _) -> O
+    Board(_, _, O, _, _, O, _, _, O) -> O
+    Board(_, _, O, _, O, _, O, _, _) -> O
+    Board(O, _, _, _, O, _, _, _, O) -> O
+    Board(_, _, _, _, _, _, _, _, _) -> E
+  }
+}
