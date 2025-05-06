@@ -48,7 +48,7 @@ pub fn to_string_board(board: Board) -> String {
   divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider
 }
 
-pub fn check_winner(board: Board) -> Piece {
+pub fn get_winner(board: Board) -> Piece {
   case board {
     Board(X, X, X, _, _, _, _, _, _) -> X
     Board(_, _, _, X, X, X, _, _, _) -> X
