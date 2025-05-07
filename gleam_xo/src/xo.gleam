@@ -162,3 +162,7 @@ pub fn generate_game_moves() -> List(Move) {
   let positions = [A, B, C, D, E, F, G, H, I] |> list.shuffle
   list.map2(pieces, positions, Move)
 }
+
+pub fn new_board() -> Board {
+  Board(None, None, None, None, None, None, None, None, None)
+}
