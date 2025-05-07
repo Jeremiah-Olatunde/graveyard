@@ -1,18 +1,28 @@
+import gleam/int
+import gleam/list
+import gleam/pair
 import prng/random.{type Generator}
 import prng/seed.{type Seed}
 
 pub fn main() -> Nil {
-  let generator_dice_rolls: Generator(Int) = random.int(1, 6)
+  let chars: List(String) = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-  let #(roll_0, next_seed): #(Int, Seed) =
-    random.step(generator_dice_rolls, seed.new(0))
-  let #(roll_1, next_seed): #(Int, Seed) =
-    random.step(generator_dice_rolls, next_seed)
-  let #(roll_2, _): #(Int, Seed) = random.step(generator_dice_rolls, next_seed)
-
-  echo roll_0
-  echo roll_1
-  echo roll_2
+  echo list.shuffle(chars)
+  echo prng_shuffle(chars, seed.new(0))
+  echo prng_shuffle(chars, seed.new(1))
 
   Nil
+}
+
+fn prng_shuffle(ls: List(a), seed: Seed) -> List(a) {
+  let generator: Generator(Int) = random.int(random.min_int, random.max_int)
+
+  let #(_, new_list) =
+    list.map_fold(ls, seed, fn(seed, item) -> #(Seed, #(Int, a)) {
+      let #(int, next_seed) = random.step(generator, seed)
+      #(next_seed, #(int, item))
+    })
+
+  list.sort(new_list, fn(a, b) { int.compare(a.0, b.0) })
+  |> list.map(pair.second)
 }
