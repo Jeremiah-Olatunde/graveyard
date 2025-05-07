@@ -5,15 +5,15 @@ pub fn main() -> Nil {
   io.println("Hello from xo!")
   let board =
     Board(
-      Some(X),
-      Some(X),
-      Some(X),
-      Some(X),
-      Some(X),
-      Some(X),
-      Some(X),
-      Some(X),
-      Some(X),
+      a: Some(X),
+      b: Some(X),
+      c: Some(X),
+      d: Some(X),
+      e: Some(X),
+      f: Some(X),
+      g: Some(X),
+      h: Some(X),
+      i: Some(X),
     )
 
   io.print(to_string_board(board))
@@ -28,15 +28,15 @@ pub type Piece {
 
 pub type Board {
   Board(
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
-    Option(Piece),
+    a: Option(Piece),
+    b: Option(Piece),
+    c: Option(Piece),
+    d: Option(Piece),
+    e: Option(Piece),
+    f: Option(Piece),
+    g: Option(Piece),
+    h: Option(Piece),
+    i: Option(Piece),
   )
 }
 
