@@ -1,5 +1,5 @@
 import gleam/io
-import gleam/list
+import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
 
 pub fn main() -> Nil {
@@ -191,4 +191,24 @@ pub fn new_board() -> Board {
 
 pub fn generate_simulated_game() -> Board {
   generate_game_moves() |> list.fold(new_board(), place_piece_unsafe)
+}
+
+pub type SimulationResult {
+  SimulationResult(winner: Option(Piece), board: Board)
+}
+
+pub fn run_simulation(moves: List(Move)) -> SimulationResult {
+  moves
+  |> list.fold_until(SimulationResult(None, new_board()), fn(result, move) {
+    case result {
+      SimulationResult(Some(_), _) -> {
+        Stop(result)
+      }
+      SimulationResult(None, board) -> {
+        let board = place_piece_unsafe(board, move)
+        let winner = get_winner(board)
+        Continue(SimulationResult(winner, board))
+      }
+    }
+  })
 }
