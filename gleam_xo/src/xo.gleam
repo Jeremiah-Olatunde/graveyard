@@ -90,7 +90,7 @@ pub fn to_string_board(board: Board) -> String {
   let divider = "-------------\n"
   let row_0 = "| " <> a <> " | " <> b <> " | " <> c <> " |\n"
   let row_1 = "| " <> d <> " | " <> e <> " | " <> f <> " |\n"
-  let row_2 = "| " <> g <> " | " <> h <> " | " <> i <> " |\n"
+  let row_2 = "| " <> g <> " | " <> h <> " | " <> i <> " |"
 
   divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider
 }
