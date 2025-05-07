@@ -50,6 +50,10 @@ pub fn to_string_piece(piece: Piece) -> String {
   }
 }
 
+pub fn print_piece(piece: Piece) -> Nil {
+  piece |> to_string_piece() |> io.println()
+}
+
 pub fn to_string_board(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
@@ -69,6 +73,10 @@ pub fn to_string_board(board: Board) -> String {
   let row_2 = "| " <> g <> " | " <> h <> " | " <> i <> " |\n"
 
   divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider
+}
+
+pub fn print_board(board: Board) -> Nil {
+  board |> to_string_board() |> io.println()
 }
 
 pub fn get_winner(board: Board) -> Option(Piece) {
