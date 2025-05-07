@@ -68,6 +68,12 @@ pub fn to_string_piece(piece: Piece) -> String {
   }
 }
 
+pub fn to_string_move(move: Move) -> String {
+  let Move(piece, position) = move
+
+  to_string_piece(piece) <> " plays " <> to_string_position(position)
+}
+
 pub fn to_string_board(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
