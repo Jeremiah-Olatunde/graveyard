@@ -40,6 +40,18 @@ pub type Board {
   )
 }
 
+pub type BoardPosition {
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
+  I
+}
+
 pub fn to_string_piece(piece: Piece) -> String {
   case piece {
     X -> "x"
