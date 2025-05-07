@@ -180,3 +180,7 @@ pub fn generate_game_moves() -> List(Move) {
 pub fn new_board() -> Board {
   Board(None, None, None, None, None, None, None, None, None)
 }
+
+pub fn generate_simulated_game() -> Board {
+  generate_game_moves() |> list.fold(new_board(), place_piece_unsafe)
+}
