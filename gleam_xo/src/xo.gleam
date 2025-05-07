@@ -101,3 +101,68 @@ pub fn get_winner(board: Board) -> Option(Piece) {
     Board(_, _, _, _, _, _, _, _, _) -> None
   }
 }
+
+pub fn place_piece(
+  board: Board,
+  piece: Piece,
+  position: BoardPosition,
+) -> Result(Board, Nil) {
+  let Board(a, b, c, d, e, f, g, h, i) = board
+
+  case position {
+    A -> {
+      case a {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, a: Some(piece)))
+      }
+    }
+    B -> {
+      case b {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, b: Some(piece)))
+      }
+    }
+    C -> {
+      case c {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, c: Some(piece)))
+      }
+    }
+    D -> {
+      case d {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, d: Some(piece)))
+      }
+    }
+    E -> {
+      case e {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, e: Some(piece)))
+      }
+    }
+    F -> {
+      case f {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, f: Some(piece)))
+      }
+    }
+    G -> {
+      case g {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, g: Some(piece)))
+      }
+    }
+    H -> {
+      case h {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, h: Some(piece)))
+      }
+    }
+    I -> {
+      case i {
+        Some(_) -> Error(Nil)
+        None -> Ok(Board(..board, i: Some(piece)))
+      }
+    }
+  }
+}
