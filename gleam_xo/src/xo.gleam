@@ -5,7 +5,7 @@ import gleam/option.{type Option, None, Some}
 pub fn main() -> Nil {
   io.println("Hello from xo!")
 
-  echo generate_game_moves()
+  let moves = generate_game_moves()
 
   Nil
 }
@@ -95,11 +95,8 @@ pub fn get_winner(board: Board) -> Option(Piece) {
   }
 }
 
-pub fn place_piece(
-  board: Board,
-  piece: Piece,
-  position: BoardPosition,
-) -> Result(Board, Nil) {
+pub fn place_piece(board: Board, move: Move) -> Result(Board, Nil) {
+  let Move(piece, position) = move
   let Board(a, b, c, d, e, f, g, h, i) = board
 
   case position {
