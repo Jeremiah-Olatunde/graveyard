@@ -1,8 +1,10 @@
 import gleam/io
+import gleam/list
 import gleam/option.{type Option, None, Some}
 
 pub fn main() -> Nil {
   io.println("Hello from xo!")
+
   let board =
     Board(
       a: Some(X),
@@ -165,4 +167,8 @@ pub fn place_piece(
       }
     }
   }
+}
+
+pub fn generate_game_moves() -> List(BoardPosition) {
+  [A, B, C, D, E, F, G, H, I] |> list.shuffle
 }
