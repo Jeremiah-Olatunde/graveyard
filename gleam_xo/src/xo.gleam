@@ -5,8 +5,6 @@ import gleam/option.{type Option, None, Some}
 pub fn main() -> Nil {
   io.println("Hello from xo!")
 
-  let moves = generate_game_moves()
-
   Nil
 }
 
@@ -154,6 +152,22 @@ pub fn place_piece(board: Board, move: Move) -> Result(Board, Nil) {
         None -> Ok(Board(..board, i: Some(piece)))
       }
     }
+  }
+}
+
+pub fn place_piece_unsafe(board: Board, move: Move) -> Board {
+  let Move(piece, position) = move
+
+  case position {
+    A -> Board(..board, a: Some(piece))
+    B -> Board(..board, b: Some(piece))
+    C -> Board(..board, c: Some(piece))
+    D -> Board(..board, d: Some(piece))
+    E -> Board(..board, e: Some(piece))
+    F -> Board(..board, f: Some(piece))
+    G -> Board(..board, g: Some(piece))
+    H -> Board(..board, h: Some(piece))
+    I -> Board(..board, i: Some(piece))
   }
 }
 
