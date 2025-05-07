@@ -47,6 +47,20 @@ pub fn print(thing: a, with: fn(a) -> String) {
   thing |> with() |> io.println()
 }
 
+pub fn to_string_position(position: BoardPosition) -> String {
+  case position {
+    A -> "a"
+    B -> "b"
+    C -> "c"
+    D -> "d"
+    E -> "e"
+    F -> "f"
+    G -> "g"
+    H -> "h"
+    I -> "i"
+  }
+}
+
 pub fn to_string_piece(piece: Piece) -> String {
   case piece {
     X -> "x"
