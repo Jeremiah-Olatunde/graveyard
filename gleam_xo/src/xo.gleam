@@ -5,22 +5,13 @@ import gleam/option.{type Option, None, Some}
 pub fn main() -> Nil {
   io.println("Hello from xo!")
 
-  let board =
-    Board(
-      a: Some(X),
-      b: Some(X),
-      c: Some(X),
-      d: Some(X),
-      e: Some(X),
-      f: Some(X),
-      g: Some(X),
-      h: Some(X),
-      i: Some(X),
-    )
-
-  io.print(to_string_board(board))
+  echo generate_game_moves()
 
   Nil
+}
+
+pub type Move {
+  Move(piece: Piece, position: BoardPosition)
 }
 
 pub type Piece {
@@ -169,6 +160,8 @@ pub fn place_piece(
   }
 }
 
-pub fn generate_game_moves() -> List(BoardPosition) {
-  [A, B, C, D, E, F, G, H, I] |> list.shuffle
+pub fn generate_game_moves() -> List(Move) {
+  let pieces = X |> list.repeat(5) |> list.intersperse(O)
+  let positions = [A, B, C, D, E, F, G, H, I] |> list.shuffle
+  list.map2(pieces, positions, Move)
 }
