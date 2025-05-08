@@ -49,7 +49,7 @@ pub fn print(thing: a, with: fn(a) -> String) {
   thing |> with() |> io.println()
 }
 
-pub fn to_string_position(position: BoardPosition) -> String {
+pub fn position_to_string(position: BoardPosition) -> String {
   case position {
     A -> "a"
     B -> "b"
@@ -63,30 +63,30 @@ pub fn to_string_position(position: BoardPosition) -> String {
   }
 }
 
-pub fn to_string_piece(piece: Piece) -> String {
+pub fn piece_to_string(piece: Piece) -> String {
   case piece {
     X -> "x"
     O -> "o"
   }
 }
 
-pub fn to_string_move(move: Move) -> String {
+pub fn move_to_string(move: Move) -> String {
   let Move(piece, position) = move
-  to_string_piece(piece) <> " plays " <> to_string_position(position)
+  piece_to_string(piece) <> " plays " <> position_to_string(position)
 }
 
-pub fn to_string_board(board: Board) -> String {
+pub fn board_to_string(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
-  let a = a |> option.map(to_string_piece) |> option.unwrap("A")
-  let b = b |> option.map(to_string_piece) |> option.unwrap("B")
-  let c = c |> option.map(to_string_piece) |> option.unwrap("C")
-  let d = d |> option.map(to_string_piece) |> option.unwrap("D")
-  let e = e |> option.map(to_string_piece) |> option.unwrap("E")
-  let f = f |> option.map(to_string_piece) |> option.unwrap("F")
-  let g = g |> option.map(to_string_piece) |> option.unwrap("G")
-  let h = h |> option.map(to_string_piece) |> option.unwrap("H")
-  let i = i |> option.map(to_string_piece) |> option.unwrap("I")
+  let a = a |> option.map(piece_to_string) |> option.unwrap("A")
+  let b = b |> option.map(piece_to_string) |> option.unwrap("B")
+  let c = c |> option.map(piece_to_string) |> option.unwrap("C")
+  let d = d |> option.map(piece_to_string) |> option.unwrap("D")
+  let e = e |> option.map(piece_to_string) |> option.unwrap("E")
+  let f = f |> option.map(piece_to_string) |> option.unwrap("F")
+  let g = g |> option.map(piece_to_string) |> option.unwrap("G")
+  let h = h |> option.map(piece_to_string) |> option.unwrap("H")
+  let i = i |> option.map(piece_to_string) |> option.unwrap("I")
 
   let divider = "-------------\n"
   let divider_no_break = "-------------"
