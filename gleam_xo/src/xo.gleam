@@ -1,3 +1,4 @@
+import gleam/erlang
 import gleam/float
 import gleam/int
 import gleam/io
@@ -5,7 +6,7 @@ import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
 
 pub fn main() -> Nil {
-  io.println("Hello from xo!")
+  io.println("play xo!")
 
   Nil
 }
@@ -60,6 +61,21 @@ pub fn position_to_string(position: BoardPosition) -> String {
     G -> "g"
     H -> "h"
     I -> "i"
+  }
+}
+
+pub fn position_from_string(position: String) -> Result(BoardPosition, Nil) {
+  case position {
+    "a" -> Ok(A)
+    "b" -> Ok(B)
+    "c" -> Ok(C)
+    "d" -> Ok(D)
+    "e" -> Ok(E)
+    "f" -> Ok(F)
+    "g" -> Ok(G)
+    "h" -> Ok(H)
+    "i" -> Ok(I)
+    _ -> Error(Nil)
   }
 }
 
