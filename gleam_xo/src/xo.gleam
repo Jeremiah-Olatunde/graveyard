@@ -89,11 +89,12 @@ pub fn to_string_board(board: Board) -> String {
   let i = i |> option.map(to_string_piece) |> option.unwrap("I")
 
   let divider = "-------------\n"
+  let divider_no_break = "-------------"
   let row_0 = "| " <> a <> " | " <> b <> " | " <> c <> " |\n"
   let row_1 = "| " <> d <> " | " <> e <> " | " <> f <> " |\n"
-  let row_2 = "| " <> g <> " | " <> h <> " | " <> i <> " |"
+  let row_2 = "| " <> g <> " | " <> h <> " | " <> i <> " |\n"
 
-  divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider
+  divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider_no_break
 }
 
 pub fn get_winner(board: Board) -> Option(Piece) {
