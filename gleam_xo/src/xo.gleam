@@ -1,4 +1,5 @@
 import gleam/float
+import gleam/int
 import gleam/io
 import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
@@ -208,7 +209,8 @@ pub fn piece_random() -> Piece {
 }
 
 pub fn board_random() -> Board {
-  todo
+  game_mock_moves(int.random(10))
+  |> list.fold(board_empty(), board_place_piece_unsafe)
 }
 
 pub type Game {
