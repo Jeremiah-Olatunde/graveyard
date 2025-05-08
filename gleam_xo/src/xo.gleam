@@ -1,4 +1,3 @@
-import gleam/erlang
 import gleam/io
 import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
@@ -71,7 +70,6 @@ pub fn to_string_piece(piece: Piece) -> String {
 
 pub fn to_string_move(move: Move) -> String {
   let Move(piece, position) = move
-
   to_string_piece(piece) <> " plays " <> to_string_position(position)
 }
 
@@ -118,7 +116,7 @@ pub fn get_winner(board: Board) -> Option(Piece) {
   }
 }
 
-pub fn place_piece(board: Board, move: Move) -> Result(Board, Nil) {
+pub fn board_place_piece(board: Board, move: Move) -> Result(Board, Nil) {
   let Move(piece, position) = move
   let Board(a, b, c, d, e, f, g, h, i) = board
 
@@ -180,7 +178,7 @@ pub fn place_piece(board: Board, move: Move) -> Result(Board, Nil) {
   }
 }
 
-pub fn place_piece_unsafe(board: Board, move: Move) -> Board {
+pub fn board_place_piece_unsafe(board: Board, move: Move) -> Board {
   let Move(piece, position) = move
 
   case position {
@@ -196,33 +194,29 @@ pub fn place_piece_unsafe(board: Board, move: Move) -> Board {
   }
 }
 
-pub fn generate_game_moves() -> List(Move) {
-  let pieces = X |> list.repeat(5) |> list.intersperse(O)
-  let positions = [A, B, C, D, E, F, G, H, I] |> list.shuffle
-  list.map2(pieces, positions, Move)
-}
-
-pub fn new_board() -> Board {
+pub fn board_empty() -> Board {
   Board(None, None, None, None, None, None, None, None, None)
-}
-
-pub fn generate_simulated_game() -> Board {
-  generate_game_moves() |> list.fold(new_board(), place_piece_unsafe)
 }
 
 pub type Game {
   Game(winner: Option(Piece), board: Board)
 }
 
-pub fn run_simulation(moves: List(Move)) -> Game {
+pub fn game_mock_moves() -> List(Move) {
+  let pieces = X |> list.repeat(5) |> list.intersperse(O)
+  let positions = [A, B, C, D, E, F, G, H, I] |> list.shuffle
+  list.map2(pieces, positions, Move)
+}
+
+pub fn game_from_moves_unsafe(moves: List(Move)) -> Game {
   moves
-  |> list.fold_until(Game(None, new_board()), fn(result, move) {
+  |> list.fold_until(Game(None, board_empty()), fn(result, move) {
     case result {
       Game(Some(_), _) -> {
         Stop(result)
       }
       Game(None, board) -> {
-        let board = place_piece_unsafe(board, move)
+        let board = board_place_piece_unsafe(board, move)
         let winner = get_winner(board)
         Continue(Game(winner, board))
       }
