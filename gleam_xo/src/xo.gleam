@@ -215,9 +215,10 @@ pub type Game {
   Game(winner: Option(Piece), board: Board)
 }
 
-pub fn game_mock_moves() -> List(Move) {
+pub fn game_mock_moves(count: Int) -> List(Move) {
   let pieces = X |> list.repeat(5) |> list.intersperse(O)
-  let positions = [A, B, C, D, E, F, G, H, I] |> list.shuffle
+  let positions =
+    [A, B, C, D, E, F, G, H, I] |> list.shuffle |> list.take(count)
   list.map2(pieces, positions, Move)
 }
 
