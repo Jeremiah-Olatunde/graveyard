@@ -4,6 +4,8 @@ import gleam/int
 import gleam/io
 import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
+import gleam/result
+import gleam/string
 
 pub fn main() -> Nil {
   io.println("play xo!")
@@ -64,7 +66,13 @@ pub fn position_to_string(position: BoardPosition) -> String {
   }
 }
 
-pub fn position_from_string(position: String) -> Result(BoardPosition, Nil) {
+pub type InvalidPosition {
+  InvalidPosition(String)
+}
+
+pub fn position_from_string(
+  position: String,
+) -> Result(BoardPosition, InvalidPosition) {
   case position {
     "a" -> Ok(A)
     "b" -> Ok(B)
@@ -75,8 +83,16 @@ pub fn position_from_string(position: String) -> Result(BoardPosition, Nil) {
     "g" -> Ok(G)
     "h" -> Ok(H)
     "i" -> Ok(I)
-    _ -> Error(Nil)
+    _ -> Error(InvalidPosition(position))
   }
+}
+
+pub fn move_read(piece: Piece) -> Result(Move, InvalidPosition) {
+  let assert Ok(position) = erlang.get_line("player turn (x): ")
+  position
+  |> string.trim()
+  |> position_from_string()
+  |> result.map(Move(piece, _))
 }
 
 pub fn piece_to_string(piece: Piece) -> String {
