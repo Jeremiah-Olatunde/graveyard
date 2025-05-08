@@ -1,3 +1,4 @@
+import gleam/float
 import gleam/io
 import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
@@ -196,6 +197,14 @@ pub fn board_place_piece_unsafe(board: Board, move: Move) -> Board {
 
 pub fn board_empty() -> Board {
   Board(None, None, None, None, None, None, None, None, None)
+}
+
+pub fn piece_random() -> Piece {
+  let random = float.random()
+  case random <. 0.5 {
+    True -> X
+    False -> O
+  }
 }
 
 pub type Game {
