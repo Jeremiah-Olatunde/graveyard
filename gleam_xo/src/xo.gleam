@@ -209,21 +209,21 @@ pub fn generate_simulated_game() -> Board {
   generate_game_moves() |> list.fold(new_board(), place_piece_unsafe)
 }
 
-pub type SimulationResult {
-  SimulationResult(winner: Option(Piece), board: Board)
+pub type Game {
+  Game(winner: Option(Piece), board: Board)
 }
 
-pub fn run_simulation(moves: List(Move)) -> SimulationResult {
+pub fn run_simulation(moves: List(Move)) -> Game {
   moves
-  |> list.fold_until(SimulationResult(None, new_board()), fn(result, move) {
+  |> list.fold_until(Game(None, new_board()), fn(result, move) {
     case result {
-      SimulationResult(Some(_), _) -> {
+      Game(Some(_), _) -> {
         Stop(result)
       }
-      SimulationResult(None, board) -> {
+      Game(None, board) -> {
         let board = place_piece_unsafe(board, move)
         let winner = get_winner(board)
-        Continue(SimulationResult(winner, board))
+        Continue(Game(winner, board))
       }
     }
   })
