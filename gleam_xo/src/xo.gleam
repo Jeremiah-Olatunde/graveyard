@@ -207,6 +207,10 @@ pub fn piece_random() -> Piece {
   }
 }
 
+pub fn board_random() -> Board {
+  todo
+}
+
 pub type Game {
   Game(winner: Option(Piece), board: Board)
 }
