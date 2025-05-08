@@ -135,7 +135,7 @@ pub fn get_winner(board: Board) -> Option(Piece) {
   }
 }
 
-pub fn board_place_piece(board: Board, move: Move) -> Result(Board, Nil) {
+pub fn board_make_move(board: Board, move: Move) -> Result(Board, Nil) {
   let Move(piece, position) = move
   let Board(a, b, c, d, e, f, g, h, i) = board
 
