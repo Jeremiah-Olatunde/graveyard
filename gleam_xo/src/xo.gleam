@@ -1,3 +1,4 @@
+import gleam/erlang
 import gleam/io
 import gleam/list.{Continue, Stop}
 import gleam/option.{type Option, None, Some}
@@ -77,15 +78,15 @@ pub fn to_string_move(move: Move) -> String {
 pub fn to_string_board(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
-  let a = a |> option.map(to_string_piece) |> option.unwrap(" ")
-  let b = b |> option.map(to_string_piece) |> option.unwrap(" ")
-  let c = c |> option.map(to_string_piece) |> option.unwrap(" ")
-  let d = d |> option.map(to_string_piece) |> option.unwrap(" ")
-  let e = e |> option.map(to_string_piece) |> option.unwrap(" ")
-  let f = f |> option.map(to_string_piece) |> option.unwrap(" ")
-  let g = g |> option.map(to_string_piece) |> option.unwrap(" ")
-  let h = h |> option.map(to_string_piece) |> option.unwrap(" ")
-  let i = i |> option.map(to_string_piece) |> option.unwrap(" ")
+  let a = a |> option.map(to_string_piece) |> option.unwrap("A")
+  let b = b |> option.map(to_string_piece) |> option.unwrap("B")
+  let c = c |> option.map(to_string_piece) |> option.unwrap("C")
+  let d = d |> option.map(to_string_piece) |> option.unwrap("D")
+  let e = e |> option.map(to_string_piece) |> option.unwrap("E")
+  let f = f |> option.map(to_string_piece) |> option.unwrap("F")
+  let g = g |> option.map(to_string_piece) |> option.unwrap("G")
+  let h = h |> option.map(to_string_piece) |> option.unwrap("H")
+  let i = i |> option.map(to_string_piece) |> option.unwrap("I")
 
   let divider = "-------------\n"
   let row_0 = "| " <> a <> " | " <> b <> " | " <> c <> " |\n"
