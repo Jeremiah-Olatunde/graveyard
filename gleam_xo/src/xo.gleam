@@ -94,15 +94,15 @@ pub fn move_to_string(move: Move) -> String {
 pub fn board_to_string(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
-  let a = a |> option.map(piece_to_string) |> option.unwrap("A")
-  let b = b |> option.map(piece_to_string) |> option.unwrap("B")
-  let c = c |> option.map(piece_to_string) |> option.unwrap("C")
-  let d = d |> option.map(piece_to_string) |> option.unwrap("D")
-  let e = e |> option.map(piece_to_string) |> option.unwrap("E")
-  let f = f |> option.map(piece_to_string) |> option.unwrap("F")
-  let g = g |> option.map(piece_to_string) |> option.unwrap("G")
-  let h = h |> option.map(piece_to_string) |> option.unwrap("H")
-  let i = i |> option.map(piece_to_string) |> option.unwrap("I")
+  let a = a |> option.map(piece_to_string) |> option.unwrap("a")
+  let b = b |> option.map(piece_to_string) |> option.unwrap("b")
+  let c = c |> option.map(piece_to_string) |> option.unwrap("c")
+  let d = d |> option.map(piece_to_string) |> option.unwrap("d")
+  let e = e |> option.map(piece_to_string) |> option.unwrap("e")
+  let f = f |> option.map(piece_to_string) |> option.unwrap("f")
+  let g = g |> option.map(piece_to_string) |> option.unwrap("g")
+  let h = h |> option.map(piece_to_string) |> option.unwrap("h")
+  let i = i |> option.map(piece_to_string) |> option.unwrap("i")
 
   let divider = "-------------\n"
   let divider_no_break = "-------------"
