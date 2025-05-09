@@ -276,3 +276,15 @@ pub fn game_from_moves_unsafe(moves: List(Move)) -> Game {
 pub fn game_empty() -> Game {
   Game(None, board_empty())
 }
+
+pub fn game_make_move(game: Game, move: Move) -> Result(Game, Nil) {
+  let Game(winner, board) = game
+
+  case winner {
+    Some(_) -> Error(Nil)
+    None -> {
+      let board = board_make_move(board, move)
+      result.map(board, fn(board) { Game(get_winner(board), board) })
+    }
+  }
+}
