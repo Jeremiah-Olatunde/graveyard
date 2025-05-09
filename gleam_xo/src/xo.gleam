@@ -88,7 +88,8 @@ pub fn position_from_string(
 }
 
 pub fn move_read(piece: Piece) -> Result(Move, InvalidPosition) {
-  let assert Ok(position) = erlang.get_line("player turn (x): ")
+  let assert Ok(position) =
+    erlang.get_line("player turn (" <> piece_to_string(piece) <> "): ")
   position
   |> string.trim()
   |> position_from_string()
