@@ -10,6 +10,8 @@ import gleam/string
 pub fn main() -> Nil {
   io.println("play xo!")
 
+  game_runner()
+
   Nil
 }
 
@@ -287,5 +289,31 @@ pub fn game_make_move(game: Game, move: Move) -> Result(Game, Nil) {
       let board = board_make_move(board, move)
       result.map(board, fn(board) { Game(get_winner(board), board) })
     }
+  }
+}
+
+pub fn game_runner() -> Nil {
+  let turns = X |> list.repeat(5) |> list.intersperse(O)
+
+  let Game(winner, board) =
+    list.fold_until(turns, game_empty(), fn(game, turn) {
+      let Game(_, board) = game
+      print(board, board_to_string)
+      io.println("")
+
+      let assert Ok(move) = move_read(turn)
+      let assert Ok(game) = game_make_move(game, move)
+
+      case game {
+        Game(Some(_), _) -> Stop(game)
+        Game(None, _) -> Continue(game)
+      }
+    })
+
+  io.println(board_to_string(board))
+
+  case winner {
+    Some(piece) -> io.println("winner " <> piece_to_string(piece))
+    None -> io.println("draw")
   }
 }
