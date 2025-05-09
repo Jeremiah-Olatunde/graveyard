@@ -272,3 +272,7 @@ pub fn game_from_moves_unsafe(moves: List(Move)) -> Game {
     }
   })
 }
+
+pub fn game_empty() -> Game {
+  Game(None, board_empty())
+}
