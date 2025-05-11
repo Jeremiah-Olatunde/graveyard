@@ -10,8 +10,6 @@ import gleam/string
 pub fn main() -> Nil {
   io.println("play xo!")
 
-  game_runner()
-
   Nil
 }
 
@@ -96,6 +94,15 @@ pub fn move_read(piece: Piece) -> Result(Move, InvalidPosition) {
   |> string.trim()
   |> position_from_string()
   |> result.map(Move(piece, _))
+}
+
+pub fn repeat_until(fun: fn() -> Result(a, b)) -> a {
+  let returned = fun()
+
+  case returned {
+    Ok(value) -> value
+    Error(_) -> repeat_until(fun)
+  }
 }
 
 pub fn piece_to_string(piece: Piece) -> String {
