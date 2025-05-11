@@ -253,6 +253,12 @@ pub type Game {
   Game(winner: Option(Piece), board: Board)
 }
 
+pub type GameX {
+  Aborted
+  Settled(winner: Piece)
+  Pending(player: Piece, board: Board)
+}
+
 pub fn game_mock_moves(count: Int) -> List(Move) {
   let pieces = X |> list.repeat(5) |> list.intersperse(O)
   let positions =
