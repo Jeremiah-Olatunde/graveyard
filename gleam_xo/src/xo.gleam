@@ -14,25 +14,25 @@ pub fn main() -> Nil {
 }
 
 pub type Move {
-  Move(piece: Piece, position: BoardPosition)
+  Move(player: Player, position: BoardPosition)
 }
 
-pub type Piece {
+pub type Player {
   X
   O
 }
 
 pub type Board {
   Board(
-    a: Option(Piece),
-    b: Option(Piece),
-    c: Option(Piece),
-    d: Option(Piece),
-    e: Option(Piece),
-    f: Option(Piece),
-    g: Option(Piece),
-    h: Option(Piece),
-    i: Option(Piece),
+    a: Option(Player),
+    b: Option(Player),
+    c: Option(Player),
+    d: Option(Player),
+    e: Option(Player),
+    f: Option(Player),
+    g: Option(Player),
+    h: Option(Player),
+    i: Option(Player),
   )
 }
 
@@ -87,13 +87,13 @@ pub fn position_from_string(
   }
 }
 
-pub fn move_read(piece: Piece) -> Result(Move, InvalidPosition) {
+pub fn move_read(player: Player) -> Result(Move, InvalidPosition) {
   let assert Ok(position) =
-    erlang.get_line("player turn (" <> piece_to_string(piece) <> "): ")
+    erlang.get_line("player turn (" <> player_to_string(player) <> "): ")
   position
   |> string.trim()
   |> position_from_string()
-  |> result.map(Move(piece, _))
+  |> result.map(Move(player, _))
 }
 
 pub fn repeat_until(fun: fn() -> Result(a, b)) -> a {
@@ -105,30 +105,30 @@ pub fn repeat_until(fun: fn() -> Result(a, b)) -> a {
   }
 }
 
-pub fn piece_to_string(piece: Piece) -> String {
-  case piece {
+pub fn player_to_string(player: Player) -> String {
+  case player {
     X -> "x"
     O -> "o"
   }
 }
 
 pub fn move_to_string(move: Move) -> String {
-  let Move(piece, position) = move
-  piece_to_string(piece) <> " plays " <> position_to_string(position)
+  let Move(player, position) = move
+  player_to_string(player) <> " plays " <> position_to_string(position)
 }
 
 pub fn board_to_string(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
-  let a = a |> option.map(piece_to_string) |> option.unwrap("a")
-  let b = b |> option.map(piece_to_string) |> option.unwrap("b")
-  let c = c |> option.map(piece_to_string) |> option.unwrap("c")
-  let d = d |> option.map(piece_to_string) |> option.unwrap("d")
-  let e = e |> option.map(piece_to_string) |> option.unwrap("e")
-  let f = f |> option.map(piece_to_string) |> option.unwrap("f")
-  let g = g |> option.map(piece_to_string) |> option.unwrap("g")
-  let h = h |> option.map(piece_to_string) |> option.unwrap("h")
-  let i = i |> option.map(piece_to_string) |> option.unwrap("i")
+  let a = a |> option.map(player_to_string) |> option.unwrap("a")
+  let b = b |> option.map(player_to_string) |> option.unwrap("b")
+  let c = c |> option.map(player_to_string) |> option.unwrap("c")
+  let d = d |> option.map(player_to_string) |> option.unwrap("d")
+  let e = e |> option.map(player_to_string) |> option.unwrap("e")
+  let f = f |> option.map(player_to_string) |> option.unwrap("f")
+  let g = g |> option.map(player_to_string) |> option.unwrap("g")
+  let h = h |> option.map(player_to_string) |> option.unwrap("h")
+  let i = i |> option.map(player_to_string) |> option.unwrap("i")
 
   let divider = "-------------\n"
   let divider_no_break = "-------------"
@@ -139,7 +139,7 @@ pub fn board_to_string(board: Board) -> String {
   divider <> row_0 <> divider <> row_1 <> divider <> row_2 <> divider_no_break
 }
 
-pub fn get_winner(board: Board) -> Option(Piece) {
+pub fn get_winner(board: Board) -> Option(Player) {
   case board {
     Board(Some(X), Some(X), Some(X), _, _, _, _, _, _) -> Some(X)
     Board(_, _, _, Some(X), Some(X), Some(X), _, _, _) -> Some(X)
@@ -162,80 +162,80 @@ pub fn get_winner(board: Board) -> Option(Piece) {
 }
 
 pub fn board_make_move(board: Board, move: Move) -> Result(Board, Nil) {
-  let Move(piece, position) = move
+  let Move(player, position) = move
   let Board(a, b, c, d, e, f, g, h, i) = board
 
   case position {
     A -> {
       case a {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, a: Some(piece)))
+        None -> Ok(Board(..board, a: Some(player)))
       }
     }
     B -> {
       case b {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, b: Some(piece)))
+        None -> Ok(Board(..board, b: Some(player)))
       }
     }
     C -> {
       case c {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, c: Some(piece)))
+        None -> Ok(Board(..board, c: Some(player)))
       }
     }
     D -> {
       case d {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, d: Some(piece)))
+        None -> Ok(Board(..board, d: Some(player)))
       }
     }
     E -> {
       case e {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, e: Some(piece)))
+        None -> Ok(Board(..board, e: Some(player)))
       }
     }
     F -> {
       case f {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, f: Some(piece)))
+        None -> Ok(Board(..board, f: Some(player)))
       }
     }
     G -> {
       case g {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, g: Some(piece)))
+        None -> Ok(Board(..board, g: Some(player)))
       }
     }
     H -> {
       case h {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, h: Some(piece)))
+        None -> Ok(Board(..board, h: Some(player)))
       }
     }
     I -> {
       case i {
         Some(_) -> Error(Nil)
-        None -> Ok(Board(..board, i: Some(piece)))
+        None -> Ok(Board(..board, i: Some(player)))
       }
     }
   }
 }
 
-pub fn board_place_piece_unsafe(board: Board, move: Move) -> Board {
-  let Move(piece, position) = move
+pub fn board_place_player_unsafe(board: Board, move: Move) -> Board {
+  let Move(player, position) = move
 
   case position {
-    A -> Board(..board, a: Some(piece))
-    B -> Board(..board, b: Some(piece))
-    C -> Board(..board, c: Some(piece))
-    D -> Board(..board, d: Some(piece))
-    E -> Board(..board, e: Some(piece))
-    F -> Board(..board, f: Some(piece))
-    G -> Board(..board, g: Some(piece))
-    H -> Board(..board, h: Some(piece))
-    I -> Board(..board, i: Some(piece))
+    A -> Board(..board, a: Some(player))
+    B -> Board(..board, b: Some(player))
+    C -> Board(..board, c: Some(player))
+    D -> Board(..board, d: Some(player))
+    E -> Board(..board, e: Some(player))
+    F -> Board(..board, f: Some(player))
+    G -> Board(..board, g: Some(player))
+    H -> Board(..board, h: Some(player))
+    I -> Board(..board, i: Some(player))
   }
 }
 
@@ -243,7 +243,7 @@ pub fn board_empty() -> Board {
   Board(None, None, None, None, None, None, None, None, None)
 }
 
-pub fn piece_random() -> Piece {
+pub fn player_random() -> Player {
   let random = float.random()
   case random <. 0.5 {
     True -> X
@@ -253,24 +253,24 @@ pub fn piece_random() -> Piece {
 
 pub fn board_random() -> Board {
   game_mock_moves(int.random(10))
-  |> list.fold(board_empty(), board_place_piece_unsafe)
+  |> list.fold(board_empty(), board_place_player_unsafe)
 }
 
 pub type Game {
-  Game(winner: Option(Piece), board: Board)
+  Game(winner: Option(Player), board: Board)
 }
 
 pub type GameX {
   Aborted
-  Settled(winner: Piece)
-  Pending(player: Piece, board: Board)
+  Settled(winner: Player)
+  Pending(player: Player, board: Board)
 }
 
 pub fn game_mock_moves(count: Int) -> List(Move) {
-  let pieces = X |> list.repeat(5) |> list.intersperse(O)
+  let players = X |> list.repeat(5) |> list.intersperse(O)
   let positions =
     [A, B, C, D, E, F, G, H, I] |> list.shuffle |> list.take(count)
-  list.map2(pieces, positions, Move)
+  list.map2(players, positions, Move)
 }
 
 pub fn game_from_moves_unsafe(moves: List(Move)) -> Game {
@@ -281,7 +281,7 @@ pub fn game_from_moves_unsafe(moves: List(Move)) -> Game {
         Stop(result)
       }
       Game(None, board) -> {
-        let board = board_place_piece_unsafe(board, move)
+        let board = board_place_player_unsafe(board, move)
         let winner = get_winner(board)
         Continue(Game(winner, board))
       }
@@ -326,7 +326,7 @@ pub fn game_runner() -> Nil {
   io.println(board_to_string(board))
 
   case winner {
-    Some(piece) -> io.println("winner " <> piece_to_string(piece))
+    Some(player) -> io.println("winner " <> player_to_string(player))
     None -> io.println("draw")
   }
 }
