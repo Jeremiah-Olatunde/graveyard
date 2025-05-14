@@ -3,8 +3,8 @@ pub type Piece {
   O
 }
 
-pub fn to_string(player: Piece) -> String {
-  case player {
+pub fn to_string(piece: Piece) -> String {
+  case piece {
     X -> "x"
     O -> "o"
   }
