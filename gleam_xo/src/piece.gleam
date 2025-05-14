@@ -9,3 +9,10 @@ pub fn to_string(piece: Piece) -> String {
     O -> "o"
   }
 }
+
+pub fn invert(piece: Piece) -> Piece {
+  case piece {
+    X -> O
+    O -> X
+  }
+}
