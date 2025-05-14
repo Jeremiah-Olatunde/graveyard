@@ -1,6 +1,6 @@
 import gleam/option.{type Option, None, Some}
 
-import piece.{type Piece}
+import piece.{type Piece, O, X}
 import position.{type Position, A, B, C, D, E, F, G, H, I}
 
 pub type Board {
@@ -117,5 +117,27 @@ pub fn place(
         None -> Ok(Board(..board, i: Some(piece)))
       }
     }
+  }
+}
+
+pub fn winner(board: Board) -> Option(Piece) {
+  case board {
+    Board(Some(X), Some(X), Some(X), _, _, _, _, _, _) -> Some(X)
+    Board(_, _, _, Some(X), Some(X), Some(X), _, _, _) -> Some(X)
+    Board(_, _, _, _, _, _, Some(X), Some(X), Some(X)) -> Some(X)
+    Board(Some(X), _, _, Some(X), _, _, Some(X), _, _) -> Some(X)
+    Board(_, Some(X), _, _, Some(X), _, _, Some(X), _) -> Some(X)
+    Board(_, _, Some(X), _, _, Some(X), _, _, Some(X)) -> Some(X)
+    Board(_, _, Some(X), _, Some(X), _, Some(X), _, _) -> Some(X)
+    Board(Some(X), _, _, _, Some(X), _, _, _, Some(X)) -> Some(X)
+    Board(Some(O), Some(O), Some(O), _, _, _, _, _, _) -> Some(O)
+    Board(_, _, _, Some(O), Some(O), Some(O), _, _, _) -> Some(O)
+    Board(_, _, _, _, _, _, Some(O), Some(O), Some(O)) -> Some(O)
+    Board(Some(O), _, _, Some(O), _, _, Some(O), _, _) -> Some(O)
+    Board(_, Some(O), _, _, Some(O), _, _, Some(O), _) -> Some(O)
+    Board(_, _, Some(O), _, _, Some(O), _, _, Some(O)) -> Some(O)
+    Board(_, _, Some(O), _, Some(O), _, Some(O), _, _) -> Some(O)
+    Board(Some(O), _, _, _, Some(O), _, _, _, Some(O)) -> Some(O)
+    Board(_, _, _, _, _, _, _, _, _) -> None
   }
 }
