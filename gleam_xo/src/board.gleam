@@ -154,3 +154,8 @@ pub fn unoccupied(board: Board) -> List(Position) {
     }
   })
 }
+
+pub fn to_list(board: Board) -> List(Option(Piece)) {
+  let Board(a, b, c, d, e, f, g, h, i) = board
+  [a, b, c, d, e, f, g, h, i]
+}
