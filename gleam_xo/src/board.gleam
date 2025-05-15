@@ -168,6 +168,14 @@ pub fn to_list_with_positions(board: Board) -> List(#(Position, Option(Piece))) 
   list.zip(positions, pieces)
 }
 
+pub fn fold(
+  board: Board,
+  initial: acc,
+  folder: fn(acc, Option(Piece)) -> acc,
+) -> acc {
+  board |> to_list() |> list.fold(initial, folder)
+}
+
 pub fn fold_with_positions(
   board: Board,
   initial: acc,
