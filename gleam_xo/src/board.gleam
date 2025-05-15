@@ -159,3 +159,11 @@ pub fn to_list(board: Board) -> List(Option(Piece)) {
   let Board(a, b, c, d, e, f, g, h, i) = board
   [a, b, c, d, e, f, g, h, i]
 }
+
+pub fn to_list_with_positions(board: Board) -> List(#(Position, Option(Piece))) {
+  let Board(a, b, c, d, e, f, g, h, i) = board
+  let pieces = [a, b, c, d, e, f, g, h, i]
+  let positions = [A, B, C, D, E, F, G, H, I]
+
+  list.zip(positions, pieces)
+}
