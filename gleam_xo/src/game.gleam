@@ -9,7 +9,7 @@ pub type Game {
   Ongoing(board: Board, next: Piece)
 }
 
-pub fn new() -> Game {
+pub fn start() -> Game {
   let board = board.new()
   Ongoing(board: board, next: piece.X)
 }
