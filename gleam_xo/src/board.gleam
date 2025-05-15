@@ -1,3 +1,4 @@
+import gleam/list
 import gleam/option.{type Option, None, Some}
 
 import piece.{type Piece, O, X}
@@ -140,4 +141,20 @@ pub fn winner(board: Board) -> Option(Piece) {
     Board(Some(O), _, _, _, Some(O), _, _, _, Some(O)) -> Some(O)
     Board(_, _, _, _, _, _, _, _, _) -> None
   }
+}
+
+pub fn unoccupied(board: Board) -> List(Position) {
+  let Board(a, b, c, d, e, f, g, h, i) = board
+  let pieces = [a, b, c, d, e, f, g, h, i]
+
+  pieces
+  |> list.zip([A, B, C, D, E, F, G, H, I])
+  |> list.filter_map(fn(item) -> Result(Position, Nil) {
+    let #(piece, position) = item
+
+    case piece {
+      Some(_) -> Error(Nil)
+      None -> Ok(position)
+    }
+  })
 }
