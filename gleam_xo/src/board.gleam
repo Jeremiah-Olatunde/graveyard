@@ -140,14 +140,10 @@ pub fn winner(board: Board) -> Option(Piece) {
 }
 
 pub fn unoccupied(board: Board) -> List(Position) {
-  let Board(a, b, c, d, e, f, g, h, i) = board
-  let pieces = [a, b, c, d, e, f, g, h, i]
-
-  pieces
-  |> list.zip([A, B, C, D, E, F, G, H, I])
+  board
+  |> to_list_with_positions()
   |> list.filter_map(fn(item) -> Result(Position, Nil) {
-    let #(piece, position) = item
-
+    let #(position, piece) = item
     case piece {
       Some(_) -> Error(Nil)
       None -> Ok(position)
