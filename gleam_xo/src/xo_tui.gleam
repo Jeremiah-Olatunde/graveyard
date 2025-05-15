@@ -13,27 +13,23 @@ pub fn main() -> Nil {
   io.println("welcome to xo!")
   io.println("")
 
-  let _ = loop(Ok(game.start()))
+  let _ = loop(game.start())
 
   Nil
 }
 
-fn loop(game: Result(Game, Nil)) -> Result(Game, Nil) {
-  case game {
-    Error(_) -> Error(Nil)
-    Ok(game) -> {
-      render_game(game)
-      case game {
-        game.Aborted -> Error(Nil)
-        game.Settled(_, _) -> Error(Nil)
-        game.Ongoing(_, _) -> {
-          let position = repeat(fn() { read_input(game.next) })
-          let game = game.advance(game, position)
-          loop(game)
-        }
+fn loop(game: Game) -> Game {
+  repeat(fn() {
+    render_game(game)
+    case game {
+      game.Aborted -> Error(Nil)
+      game.Settled(_, _) -> Error(Nil)
+      game.Ongoing(_, _) -> {
+        let position = repeat(fn() { read_input(game.next) })
+        game.advance(game, position)
       }
     }
-  }
+  })
 }
 
 fn render_game(game: Game) -> Nil {
