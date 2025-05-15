@@ -1,3 +1,5 @@
+import xo_tui
+
 pub fn main() -> Nil {
-  Nil
+  xo_tui.main()
 }
