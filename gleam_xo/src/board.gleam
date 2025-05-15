@@ -21,22 +21,18 @@ pub fn new() -> Board {
   Board(None, None, None, None, None, None, None, None, None)
 }
 
-fn helper(piece: Option(Piece), default: String) {
-  piece |> option.map(piece.to_string) |> option.unwrap(default)
-}
-
 pub fn to_string(board: Board) -> String {
   let Board(a, b, c, d, e, f, g, h, i) = board
 
-  let a = "a:" <> helper(a, "#")
-  let b = "b:" <> helper(b, "#")
-  let c = "c:" <> helper(c, "#")
-  let d = "d:" <> helper(d, "#")
-  let e = "e:" <> helper(e, "#")
-  let f = "f:" <> helper(f, "#")
-  let g = "g:" <> helper(g, "#")
-  let h = "h:" <> helper(h, "#")
-  let i = "i:" <> helper(i, "#")
+  let a = "a:" <> a |> option.map(piece.to_string) |> option.unwrap("#")
+  let b = "b:" <> b |> option.map(piece.to_string) |> option.unwrap("#")
+  let c = "c:" <> c |> option.map(piece.to_string) |> option.unwrap("#")
+  let d = "d:" <> d |> option.map(piece.to_string) |> option.unwrap("#")
+  let e = "e:" <> e |> option.map(piece.to_string) |> option.unwrap("#")
+  let f = "f:" <> f |> option.map(piece.to_string) |> option.unwrap("#")
+  let g = "g:" <> g |> option.map(piece.to_string) |> option.unwrap("#")
+  let h = "h:" <> h |> option.map(piece.to_string) |> option.unwrap("#")
+  let i = "i:" <> i |> option.map(piece.to_string) |> option.unwrap("#")
 
   a <> b <> c <> d <> e <> f <> g <> h <> i
 }
